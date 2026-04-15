@@ -40,10 +40,10 @@ jobs:
 
       - name: Configure project (Windows x86)
         if: runner.os == 'Windows'
-        run: cmake -S . -B build -A Win32
+        run: cmake -S . -B build -G "Visual Studio 17 2022" -A Win32
 
       - name: Build project
-        run: cmake --build build --config Release
+        run: cmake --build build --config Release ${{ runner.os == 'Windows' && '-- /p:Platform=Win32' || '' }}
 
       - name: Upload Linux artifacts
         if: runner.os == 'Linux'
