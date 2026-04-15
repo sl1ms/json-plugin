@@ -34,8 +34,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y gcc-multilib g++-multilib
 
-      - name: Configure project
+      - name: Configure project (Linux)
+        if: runner.os == 'Linux'
         run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Configure project (Windows x86)
+        if: runner.os == 'Windows'
+        run: cmake -S . -B build -A Win32
 
       - name: Build project
         run: cmake --build build --config Release
